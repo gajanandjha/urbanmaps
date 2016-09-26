@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>UrbanMaps</title>
+<script src=“js/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href=“css/ol.css" type="text/css">
+<script src=“js/ol.js"></script>
+
+</head>
+<body>
+<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+
+<div class="row-fluid">
+  <div class="span12">
+    <div id="map" class="map"></div>
+  </div>
+</div>
+
+</div>
+<script>
+var openStreetMapLayer = new ol.layer.Tile({
+  source: new ol.source.OSM({
+    url: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png'
+  })
+});
+var urbanMapLayer = new ol.layer.Tile({
+  source: new ol.source.OSM({
+    url: 'http://181.215.109.65/{z}/{x}/{y}.png'
+  })
+});
+urbanMapLayer.setOpacity(0.4);
+var map = new ol.Map({
+  layers: [
+    openStreetMapLayer,
+    urbanMapLayer
+  ],
+  target: 'map',
+  controls: ol.control.defaults().extend([
+    new ol.control.FullScreen()
+  ]),
+  view: new ol.View({
+    maxZoom: 18,
+    center: ol.proj.transform([88.3639, 22.5726], 'EPSG:4326', 'EPSG:3857'),
+    zoom: 10
+  })
+});
+
+var div = $('#map');
+  div.height(
+    Math.max( div.height() + ($(window).height() - $('body').height()), 300 )
+  );
+  map.updateSize();i
+
+</script>
+</body>
+</html>
